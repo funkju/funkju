@@ -1,0 +1,79 @@
+<?php
+
+// Create a variable to store the path to this module
+define('TEMPLATE_MODULE_PATH', drupal_get_path('module', 'template'));
+
+function template_node_load($nodes, $types){
+
+	if(in_array("template", $types)){
+		drupal_add_css(drupal_get_path('module', 'template') . '/css/template_editor.css', array('group' => CSS_DEFAULT, 'every_page' => FALSE));
+		drupal_add_js(array('template' => _template_config()), 'setting');
+		drupal_add_js(drupal_get_path('module', 'template') . '/js/template_editor.js', array('group' => JS_DEFAULT, 'every_page' => FALSE));
+	}
+
+}
+
+
+
+function template_theme_registry_alter(&$theme_registry) {
+  $theme_registry_copy = $theme_registry;
+  _theme_process_registry($theme_registry_copy, 'phptemplate', 'theme_engine', TEMPLATE_MODULE_PATH);
+  $theme_registry += array_diff_key($theme_registry_copy, $theme_registry);
+
+  // A list of templates the module will provide templates for
+  $hooks = array('page');
+  foreach ($hooks as $h) {
+    // Add the key 'theme paths' if it doesn't exist in this theme's registry
+    if (!isset($theme_registry[$h]['theme paths'])) {
+      $theme_registry[$h]['theme paths'] = array();
+    }
+
+    //Shift this module's directory to the top of the theme path list 
+    if(is_array($theme_registry[$h]['theme paths'])) {
+      $first_element = array_shift($theme_registry[$h]['theme paths']);
+      if ($first_element) {
+        array_unshift($theme_registry[$h]['theme paths'], $first_element, TEMPLATE_MODULE_PATH);
+      } else {
+        array_unshift($theme_registry[$h]['theme paths'], TEMPLATE_MODULE_PATH);
+      }
+    }
+  }
+}
+
+
+/*
+ * Returns an array for Drupal.settings so javascript can format the templates correctly.
+ */
+function _template_config(){
+	return array(
+		1 => array(
+			'ratio_outside' => 0.4314,
+			'layout' => 'single',
+			'panels' => array(
+				'panel1' => array('prev' => false, 'next' => t('Back')),
+				'panel2' => array('prev' => t('Front'), 'next' => false)
+			)
+		),
+		2 => array(
+			'ratio_outside' => 0.6471,
+			'ratio_inside' => 1.2941,
+			'layout' => 'bifold',
+			'panels' => array(
+				'panel1' => array('prev' => false, 'next' => t('Inside')),
+				'panel2' => array('prev' => t('Front'), 'next' => t('Back')),
+				'panel3' => array('prev' => t('Inside'), 'next' => false)
+			)
+		),
+		3 => array(
+			'ratio_outside' => 0.4213,
+			'ratio_inside' => 1.2941,
+			'layout' => 'trifold',
+			'panels' => array(
+				'panel1' => array('prev' => false, 'next' => t('Inside Front Flap')),
+				'panel2' => array('prev' => t('Front'), 'next' => t('Inside')),
+				'panel3' => array('prev' => t('Inside Front Flap'), 'next' => t('Back')),
+				'panel4' => array('prev' => t('Inside'), 'next' => false)
+			)
+		)
+	);
+}

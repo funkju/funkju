@@ -1,0 +1,102 @@
+#template_sidebar {
+	float: left;
+	width: 220px;
+}
+
+#node_template h2 {
+	-webkit-transform: rotate(-90deg); 
+	-moz-transform: rotate(-90deg);	
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	margin-left: -70px;
+	margin-top: 200px;
+	letter-spacing: 6px;
+	width: 360px;
+	font-size: 4em;
+	color: #F0F0F0;
+}
+
+#template_editor {
+	float: left;
+	background: #F4F4F4;
+	
+}
+#template_holder {
+	position: relative;
+}
+#template_holder .panel {
+	border: 1px solid #F0F0F0;
+	background: white;
+	margin: 25px auto;
+	display: none;
+	position: relative;
+}
+#template_holder .panel.active {
+	box-shadow: #AAA 5px 4px 10px;
+	display: block;
+}
+
+/*Next and Prev Buttons*/
+.next {
+	right: 50px;
+	top: 15px;
+	-webkit-transform: rotate(90deg); 
+	-moz-transform: rotate(90deg);	
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+.prev {
+	left: 10px;
+	top: 15px;
+	-webkit-transform: rotate(-90deg); 
+	-moz-transform: rotate(-90deg);	
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+.next, .prev {
+	border: 1px solid black;
+	background: #000;
+	color: #F0F0F0;
+	position: absolute;
+	cursor: pointer;
+	padding: 10px;
+}
+
+/*0.5" Margins For Print*/
+.template_type_1 .col {
+	margin: 14%;
+}
+.template_type_2 .col {
+	margin: 9%;
+}
+.template_type_2 .panel2 .col {
+	margin: 4.5%;
+}
+.template_type_3 .col {
+	margin: 14%;
+}
+.template_type_3 .panel2 .col {
+	margin: 7%;
+}
+.template_type_3 .panel3 .col {
+	margin: 3.5%;
+}
+
+/*Vertical Lines*/
+.template_type_2 .panel2 .vert {
+	left: 50%;
+}
+
+.template_type_3 .panel2 .vert {
+	left: 50%;
+}
+.template_type_3 .panel3 .vert {
+	left: 66%;
+}
+.template_type_3 .panel3 .vert.first {
+	left: 33%;
+}
+.panel .vert {
+	position: absolute;
+	width: 1px;
+	height: 100%;
+	background-color: #F0F0F0;
+	top: 0px;
+}

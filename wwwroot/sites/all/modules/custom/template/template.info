@@ -1,0 +1,4 @@
+name = Template
+description = Provides the template editor for MyChurchBulletin.com
+package = MyChurchBulletin
+core = 7.x
